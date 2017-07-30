@@ -1,0 +1,9 @@
+c:\users\sofie\documents\visual studio 2013\Projects\Tower of Hanoi\Tower of Hanoi\bin\Debug\Tower of Hanoi.exe.config
+c:\users\sofie\documents\visual studio 2013\Projects\Tower of Hanoi\Tower of Hanoi\bin\Debug\Tower of Hanoi.exe
+c:\users\sofie\documents\visual studio 2013\Projects\Tower of Hanoi\Tower of Hanoi\bin\Debug\Tower of Hanoi.pdb
+c:\users\sofie\documents\visual studio 2013\Projects\Tower of Hanoi\Tower of Hanoi\obj\Debug\Tower_of_Hanoi.Form1.resources
+c:\users\sofie\documents\visual studio 2013\Projects\Tower of Hanoi\Tower of Hanoi\obj\Debug\Tower_of_Hanoi.Properties.Resources.resources
+c:\users\sofie\documents\visual studio 2013\Projects\Tower of Hanoi\Tower of Hanoi\obj\Debug\Tower of Hanoi.csproj.GenerateResource.Cache
+c:\users\sofie\documents\visual studio 2013\Projects\Tower of Hanoi\Tower of Hanoi\obj\Debug\Tower of Hanoi.exe
+c:\users\sofie\documents\visual studio 2013\Projects\Tower of Hanoi\Tower of Hanoi\obj\Debug\Tower of Hanoi.pdb
+c:\users\sofie\documents\visual studio 2013\Projects\Tower of Hanoi\Tower of Hanoi\obj\Debug\Tower of Hanoi.csprojResolveAssemblyReference.cache
