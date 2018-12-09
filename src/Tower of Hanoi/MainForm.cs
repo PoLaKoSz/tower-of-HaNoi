@@ -5,12 +5,10 @@ using System.Windows.Forms;
 
 namespace Tower_of_Hanoi
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        #region Variable Declaration
-        public bool[,] tower = new bool[3, 5] {{ true, true, true, true, true },
-        { false, false, false, false, false },{ false, false, false, false, false } };
-        Timer t, t1;
+        public bool[,] _tower;
+        Timer _animationTimer, _timeTimer;
         TextBox ring, topRing;
         bool ringIsUp = false;
         int mid;
@@ -19,43 +17,58 @@ namespace Tower_of_Hanoi
         int step = 0;
         int oldX = 0;
         int oldY = 0;
-        #endregion
-        public Form1()
+
+
+
+        public MainForm()
         {
+            _tower = new bool[3, 5]
+            {
+                { true, true, true, true, true },
+                { false, false, false, false, false },
+                { false, false, false, false, false }
+            };
+
             InitializeComponent();
+
             Timer();
         }
+
+
+
         public void RingUp(int num)
         {
             int y = 178;
             for (int i = 0; i < 5; i++)
             {
-                if (tower[num, i] == true)
+                if (_tower[num, i] == true)
                 {
                     GetRing(num, y, ref ring);
                     oldX = ring.Location.X;
                     oldY = ring.Location.Y;
                     ring.Location = new Point(mid - (ring.Width / 2), 70);
-                    tower[num, i] = false;
+                    _tower[num, i] = false;
                     break;
                 }
                 y += 20;
             }
         }
+
         public void RingDown(int num)
         {
             int y = 258;
             for (int i = 4; i >= 0; i--)
             {
-                if (tower[num, i] == false)
+                if (_tower[num, i] == false)
                 {
                     SetRing(num, y);
-                    tower[num, i] = true;
+                    _tower[num, i] = true;
                     break;
                 }
                 y -= 20;
             }
         }
+
         public void GetRing(int num, int y, ref TextBox rings)
         {
             if (num == 0)
@@ -75,12 +88,13 @@ namespace Tower_of_Hanoi
             else if ((textBox5.Location.X + textBox5.Width / 2) == mid && textBox5.Location.Y == y)
                 rings = textBox5;
         }
+
         public void GetTopRing(int num)
         {
             int y = 178;
             for (int i = 0; i < 5; i++)
             {
-                if (tower[num, i] == true)
+                if (_tower[num, i] == true)
                 {
                     GetRing(num, y, ref topRing);
                     break;
@@ -88,6 +102,7 @@ namespace Tower_of_Hanoi
                 y += 20;
             }
         }
+
         public void SetRing(int mid, int y)
         {
             if (mid == 0)
@@ -97,9 +112,10 @@ namespace Tower_of_Hanoi
             else if (mid == 2)
                 ring.Location = new Point(535 - (ring.Width / 2), y);
         }
+
         public void RingMove(int num)
         {
-            if (tower[num, 4] == false)
+            if (_tower[num, 4] == false)
             {
                 if (ringIsUp == true)
                 {
@@ -135,6 +151,7 @@ namespace Tower_of_Hanoi
                 }
             }
         }
+
         public void LegalMoveBetween(int num1, int num2)
         {
             RingMove(num1);
@@ -154,22 +171,26 @@ namespace Tower_of_Hanoi
                 RingMove(num1);
             }
         }
+
         public void Auto()
         {
             Clear();
 
-            t = new Timer();
-            t.Interval = 1000;
-            t.Tick += new EventHandler(this.t_Tick);
-            t.Start();
+            _animationTimer = new Timer
+            {
+                Interval = 1000
+            };
+            _animationTimer.Tick += new EventHandler(this.Animation_Tick);
+            _animationTimer.Start();
         }
+
         public void Clear()
         {
             for (int j = 0; j < 5; j++)
             {
-                tower[0, j] = true;
-                tower[1, j] = false;
-                tower[2, j] = false;
+                _tower[0, j] = true;
+                _tower[1, j] = false;
+                _tower[2, j] = false;
             }
             textBox9.Location = new Point(162, 178);
             textBox8.Location = new Point(148, 198);
@@ -181,23 +202,27 @@ namespace Tower_of_Hanoi
             Timelapse.Text = "Time spent: " + time + "s";
             Steps.Text = "Steps: " + step;
         }
+
         public void Timer()
         {
-            t1 = new Timer();
-            t1.Interval = 1000;
-            t1.Tick += new EventHandler(this.t1_Tick);
-            t1.Start();
+            _timeTimer = new Timer
+            {
+                Interval = 1000
+            };
+            _timeTimer.Tick += new EventHandler(this.Time_Tick);
+            _timeTimer.Start();
         }
+
         public void Save()
         {
-
-            string tower1 = String.Format("{0};{1};{2};{3};{4}", tower[0, 0], tower[0, 1], tower[0, 2], tower[0, 3], tower[0, 4]);
-            string tower2 = String.Format("{0};{1};{2};{3};{4}", tower[1, 0], tower[1, 1], tower[1, 2], tower[1, 3], tower[1, 4]);
-            string tower3 = String.Format("{0};{1};{2};{3};{4}", tower[2, 0], tower[2, 1], tower[2, 2], tower[2, 3], tower[2, 4]);
+            string tower1 = String.Format("{0};{1};{2};{3};{4}", _tower[0, 0], _tower[0, 1], _tower[0, 2], _tower[0, 3], _tower[0, 4]);
+            string tower2 = String.Format("{0};{1};{2};{3};{4}", _tower[1, 0], _tower[1, 1], _tower[1, 2], _tower[1, 3], _tower[1, 4]);
+            string tower3 = String.Format("{0};{1};{2};{3};{4}", _tower[2, 0], _tower[2, 1], _tower[2, 2], _tower[2, 3], _tower[2, 4]);
             string values = String.Format("{0};{1};{2};{3}", oldX, oldY, time, step);
             string ringsposition = String.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8};{9}", textBox9.Location.X, textBox9.Location.Y, textBox8.Location.X, textBox8.Location.Y, textBox7.Location.X, textBox7.Location.Y, textBox6.Location.X, textBox6.Location.Y, textBox5.Location.X, textBox5.Location.Y);
             string rings = String.Format("{0};{1}", ToStringRing(ref ring), ToStringRing(ref topRing));
             string file = ToStringDateTime();
+
             using (StreamWriter sw = new StreamWriter(file, true))
             {
                 sw.WriteLine(tower1);
@@ -209,6 +234,7 @@ namespace Tower_of_Hanoi
                 sw.WriteLine(rings);
             }
         }
+
         public void LoadGame()
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -226,9 +252,9 @@ namespace Tower_of_Hanoi
 
                     for (int i = 0; i < 5; i++)
                     {
-                        tower[0, i] = Convert.ToBoolean(tower1[i]);
-                        tower[1, i] = Convert.ToBoolean(tower2[i]);
-                        tower[2, i] = Convert.ToBoolean(tower3[i]);
+                        _tower[0, i] = Convert.ToBoolean(tower1[i]);
+                        _tower[1, i] = Convert.ToBoolean(tower2[i]);
+                        _tower[2, i] = Convert.ToBoolean(tower3[i]);
                     }
                     ringIsUp = ringisup;
                     textBox9.Location = new Point(Convert.ToInt16(ringposition[0]), Convert.ToInt16(ringposition[1]));
@@ -246,6 +272,7 @@ namespace Tower_of_Hanoi
                 }
             }
         }
+
         public string ToStringDateTime()
         {
             DateTime now = DateTime.Now;
@@ -261,6 +288,7 @@ namespace Tower_of_Hanoi
 
             return str;
         }
+
         public string ToStringRing(ref TextBox rings)
         {
             if (rings == textBox9)
@@ -291,6 +319,7 @@ namespace Tower_of_Hanoi
             else return "";
 
         }
+
         public TextBox BackToBox(string ringtext, ref TextBox rings)
         {
             if (ringtext == "textBox9")
@@ -320,18 +349,20 @@ namespace Tower_of_Hanoi
             }
             else return null;
         }
-        public void t1_Tick(object sender, EventArgs e)
+
+        public void Time_Tick(object sender, EventArgs e)
         {
             time++;
             Timelapse.Text = "Time spent: " + time + "s";
             if ((textBox9.Location.X == 505 || textBox9.Location.X == 335) && textBox9.Location.Y == 178)
             {
-                t1.Stop();
-                t1.Dispose();
+                _timeTimer.Stop();
+                _timeTimer.Dispose();
                 MessageBox.Show("You Win!");
             }
         }
-        public void t_Tick(object sender, EventArgs e)
+
+        public void Animation_Tick(object sender, EventArgs e)
         {
             if (count == 0)
             {
@@ -339,8 +370,8 @@ namespace Tower_of_Hanoi
                 count++;
                 if (textBox9.Location.X == 505 && textBox9.Location.Y == 178)
                 {
-                    t.Stop();
-                    t.Dispose();
+                    _animationTimer.Stop();
+                    _animationTimer.Dispose();
                 }
             }
             else if (count == 1)
@@ -354,31 +385,38 @@ namespace Tower_of_Hanoi
                 count = 0;
             }
         }
+
         public void button1_Click(object sender, EventArgs e)
         {
             RingMove(0);
 
         }
+
         public void button2_Click(object sender, EventArgs e)
         {
             RingMove(1);
         }
+
         public void button3_Click(object sender, EventArgs e)
         {
             RingMove(2);
         }
+
         public void button4_Click(object sender, EventArgs e)
         {
             Clear();
         }
+
         public void button5_Click(object sender, EventArgs e)
         {
             Auto();
         }
+
         private void button6_Click(object sender, EventArgs e)
         {
             Save();
         }
+
         private void button7_Click(object sender, EventArgs e)
         {
             LoadGame();
